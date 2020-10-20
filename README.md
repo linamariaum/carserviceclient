@@ -30,10 +30,9 @@ Se usaron además, componentes de [Angular Material](https://material.angular.io
 Se crea utilizando el comando `ng g s shared/owner/owner`, por lo que queda ubicado en la carpeta *"/shared/owner"*. Este servicio se encarga de posibilitar los cuatro tipos de operaciones del CRUD, haciendo uso de los métodos HTTP Get, Post, Put y Delete, que posee la API expuesta para esta actividad.
 
  > **API**
- `https://thawing-chamber-47973.herokuapp.com/cars`
- `https://thawing-chamber-47973.herokuapp.com/cool-cars`
- `https://thawing-chamber-47973.herokuapp.com/owners`
-
+ - /cars `[https://thawing-chamber-47973.herokuapp.com/cars](https://thawing-chamber-47973.herokuapp.com/cars)`
+ - /cool-cars `[https://thawing-chamber-47973.herokuapp.com/cool-cars](https://thawing-chamber-47973.herokuapp.com/cool-cars)`
+ - /cars `[https://thawing-chamber-47973.herokuapp.com/owners](https://thawing-chamber-47973.herokuapp.com/owners)`
 
 ### Angular version
 
