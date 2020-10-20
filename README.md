@@ -18,7 +18,7 @@ Es usado para la creación y actualización de propietarios, es decir, permite v
 Permite visualizar la lista de los carros con sus propietarios y redirigir hacia la lista de los carros, y hacia la creación o actualización de un carro o propietario en particular al dar click sobre el.
 
 - **DialogLink:**
-Actua como un popup/dialog y permite asociar un owner a un carro.
+Actua como un popup/dialog y permite asociar un propietario a un carro.
 
  > Nota: Al eliminar un propietario se elimina la relación que este tenga con un carro.
  
