@@ -4,6 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CarService } from '../shared/car/car.service';
 import { GiphyService } from '../shared/giphy/giphy.service';
 import { NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { DialogLink } from '../dialog-link/dialog-link';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-car-edit',
@@ -18,7 +21,8 @@ export class CarEditComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private carService: CarService,
-              private giphyService: GiphyService) {
+              private giphyService: GiphyService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -58,5 +62,26 @@ export class CarEditComponent implements OnInit, OnDestroy {
       this.gotoList();
     }, error => console.error(error));
   }
+
+  linkOwner(car: any) {
+    //Link to a OWNER
+    console.log('añadir owner al carro')
+    const dialogRef = this.dialog.open(DialogLink, {
+      height: '70%',
+      width: '60%',
+      data: { content: car, type: 'car', response: null}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.response) {
+        console.log('eligio persona')
+        Swal.fire({
+          icon: 'success',
+          title: `${result.response.name} owns the ${car.name}`,
+          showConfirmButton: true
+        });
+      }
+    });
+  }
+
 }
 
