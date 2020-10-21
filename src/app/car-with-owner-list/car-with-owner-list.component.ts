@@ -36,7 +36,7 @@ export class CarWithOwnerListComponent implements OnInit {
     let carsAux: Array<any> = []
     let dnisAux: Array<any> = []
     let ownersAux: Array<any> = []
-    await this.carService.getAllCarsP().then(
+    await this.carService.getAllCars().then(
       (data) => {
         const response = data;
         const datos = response._embedded.cars;
@@ -56,7 +56,7 @@ export class CarWithOwnerListComponent implements OnInit {
       }, (error) => {
         console.error(error);
     });
-    await this.ownerService.getAllOwnersP().then(
+    await this.ownerService.getAllOwners().then(
       (data) => {
         const datos = data;
         const users = datos._embedded.owners;

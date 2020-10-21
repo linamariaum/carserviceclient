@@ -37,7 +37,7 @@ export class CarService {
     return this.http.delete(href);
   }
 
-  async getAllCarsP(): Promise<any> {
+  async getAllCars(): Promise<any> {
     return await this.http.get<any>(this.CAR_API)
       .pipe(
         retry(1),

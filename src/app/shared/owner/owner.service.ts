@@ -36,7 +36,7 @@ export class OwnerService {
     return this.http.delete(href);
   }
 
-  async getAllOwnersP(): Promise<any> {
+  async getAllOwners(): Promise<any> {
     return await this.http.get<any>(this.OWNER_API)
       .pipe(
         retry(1),
