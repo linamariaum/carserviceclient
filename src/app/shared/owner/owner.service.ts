@@ -3,32 +3,31 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-@Injectable({providedIn: 'root'})
-export class CarService {
-  public API = '//thawing-chamber-47973.herokuapp.com';
-  public CAR_API = this.API + '/cars';
+@Injectable({
+  providedIn: 'root'
+})
+export class OwnerService {
+
+  public API = 'https://thawing-chamber-47973.herokuapp.com';
+  public OWNER_API = this.API + '/owners';
 
   constructor(private http: HttpClient) {
   }
 
   getAll(): Observable<any> {
-    return this.http.get(this.API + '/cool-cars');
-  }
-
-  getCars(): Observable<any> {
-    return this.http.get(this.CAR_API);
+    return this.http.get(this.OWNER_API);
   }
 
   get(id: string) {
-    return this.http.get(this.CAR_API + '/' + id);
+    return this.http.get(this.OWNER_API + '/' + id);
   }
 
-  save(car: any): Observable<any> {
+  save(owner: any): Observable<any> {
     let result: Observable<Object>;
-    if (car['href']) {
-      result = this.http.put(car.href, car);
+    if (owner['href']) {
+      result = this.http.put(owner.href, owner);
     } else {
-      result = this.http.post(this.CAR_API, car);
+      result = this.http.post(this.OWNER_API, owner);
     }
     return result;
   }
@@ -37,8 +36,8 @@ export class CarService {
     return this.http.delete(href);
   }
 
-  async getAllCars(): Promise<any> {
-    return await this.http.get<any>(this.CAR_API)
+  async getAllOwners(): Promise<any> {
+    return await this.http.get<any>(this.OWNER_API)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -58,5 +57,4 @@ export class CarService {
     }
     return throwError(errorMessage);
   }
-
 }

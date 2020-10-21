@@ -13,9 +13,12 @@ export class CarListComponent implements OnInit {
   constructor(private carService: CarService, private giphyService: GiphyService) { }
 
   ngOnInit() {
-    this.carService.getAll().subscribe(data => {
-      this.cars = data;
+    this.carService.getCars().subscribe(data => {
+      const datos = data;
+      this.cars = datos._embedded.cars;
       for (const car of this.cars) {
+        car.href = car._links.self.href;
+        car.id = car.href.slice(48);
         this.giphyService.get(car.name).subscribe(url => car.giphyUrl = url);
       }
     });
