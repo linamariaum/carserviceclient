@@ -15,21 +15,29 @@ Permite visualizar la lista de propietarios y redirigir hacia la creación o act
 Es usado para la creación y actualización de propietarios, es decir, permite ver el detalle de un propietario en particular, así como editarlo, eliminarlo o incluso crear un nuevo propietario. Además brinda la opción de relacionar este propietario con un carro, para esto se utiliza el ```DialogLink```, que actua como un popup y se explica más adelante.
 
 - **CarWithOwnerListComponent:**
-Permite visualizar la lista de los carros con sus propietarios y redirigir hacia la lista de los carros, y hacia la creación o actualización de un carro o propietario en particular al dar click sobre el.
+Permite visualizar la lista de los carros con sus respectivos propietarios. Además permite redirigir hacia la lista de todos los carros, la creación de carros y hacia la actualización de un carro o propietario en particular al dar click sobre el.
 
 - **DialogLink:**
 Actua como un popup/dialog y permite asociar un propietario a un carro.
 
  > Nota: Al eliminar un propietario se elimina la relación que este tenga con un carro.
  
-Se usaron además, componentes de [Angular Material](https://material.angular.io/) en la versión 7.0.2 como: MatTableModule, MatCheckboxModule y MatDialogModule. Y de [sweetalert2](https://sweetalert2.github.io/) en la version 10.6.1, para notificaciones y alertas de un modo mucho más amigable visualmente.
+Se usaron además, componentes de [Angular Material](https://material.angular.io/) en la versión 7.0.2 como: MatTableModule, MatGridListModule, MatCheckboxModule y MatDialogModule. Y de [sweetalert2](https://sweetalert2.github.io/) en la version 10.6.1, para notificaciones y alertas de un modo mucho más amigable visualmente.
 
 ### Servicios
 
-- **OwnerService:**
-Se crea utilizando el comando `ng g s shared/owner/owner`, por lo que queda ubicado en la carpeta *"/shared/owner"*. Este servicio se encarga de posibilitar los cuatro tipos de operaciones del CRUD, haciendo uso de los métodos HTTP Get, Post, Put y Delete, que posee la API expuesta para esta actividad.
+Se encuentran ubicados en la carpeta `/shared`.
 
- > API
+- **CarService:**
+Permite realizar los cuatro tipos de operaciones del CRUD para lo concerniente a los carros, este servicio lo brinda ya implementado el ejercicio practico, en este se adiciona el método `getAllCars` utilizando una promesa.
+
+- **GiphyService:**
+Permite asociar una imagen a los carros por medio de GiphyApi, al igual que el anterior, este servicio lo brinda ya implementado el ejercicio practico.
+
+- **OwnerService:**
+Se crea utilizando el comando `ng g s shared/owner/owner`, por lo que queda ubicado en la carpeta *"/shared/owner"*. Este servicio se encarga de posibilitar los cuatro tipos de operaciones del CRUD (para lo concerniente a los propietarios) haciendo uso de los métodos HTTP Get, Post, Put y Delete, que posee la API expuesta para esta actividad. El método para obtener todos los propietarios, `getAllOwners` se implementa utilizando una promesa, al igual que el método de obtener todos los carros perteneciente al servicio `CarService`.
+
+ > La API utilizada para este ejercicio se encuentra en los siguientes enlaces
  >
  > /cars
  >
