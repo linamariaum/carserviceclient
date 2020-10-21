@@ -3,42 +3,63 @@
     <span style="margin: 0 10rem 0 0;">Car List</span>
     <button mat-raised-button color="primary" [routerLink]="['/car-add']">
       <mat-icon>add</mat-icon>
-      Add
+      Add Car
     </button>
     <button mat-raised-button color="primary" [routerLink]="['/car-list']" style="margin-left: 1rem;">
       <mat-icon>person_search</mat-icon>
       View all cars
     </button>
   </mat-card-title>
-  <mat-card-content>
-    <mat-list>
-      <mat-list-item *ngFor="let carWithOwner of carsWithOwners">
+
+  <div class="container">
+    <mat-grid-list cols="5" rowHeight="3:2">
+      <mat-grid-tile colspan="1" rowspan="1">
+        <h5 mat-line>IMAGE</h5>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1" rowspan="1">
+        <h5 mat-line>CAR NAME</h5>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1" rowspan="1">
+        <h5 mat-line>DNI</h5>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1" rowspan="1">
+        <h5 mat-line>OWNER NAME</h5>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1" rowspan="1">
+        <h5 mat-line>PROFESSION</h5>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="5" rowHeight="3:2" *ngFor="let carWithOwner of carsWithOwners">
+
+      <mat-grid-tile colspan="1" rowspan="1">
         <img mat-list-avatar src="{{carWithOwner.car.giphyUrl}}" alt="{{carWithOwner.car.name}}">
-        <table>
-          <tr>
-            <td>
-              <h3 mat-line>
-                <a mat-button [routerLink]="['/car-edit', carWithOwner.car.id]">{{carWithOwner.car.name}}</a>
-              </h3>
-            </td>
-            <td>
-              <h3 mat-line>
-                <a mat-button [routerLink]="['/owner-edit', carWithOwner.owner.id]">{{carWithOwner.car.ownerDni}}</a>
-              </h3>
-            </td>
-            <td>
-              <h3 mat-line>
-                <a mat-button [routerLink]="['/owner-edit', carWithOwner.owner.id]">{{carWithOwner.owner.name}}</a>
-              </h3>
-            </td>
-            <td>
-              <h3 mat-line>
-                <a mat-button [routerLink]="['/owner-edit', carWithOwner.owner.id]">{{carWithOwner.owner.profession}}</a>
-              </h3>
-            </td>
-          </tr>
-        </table>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="1" rowspan="1">
+        <h3 mat-line>
+          <a mat-button [routerLink]="['/car-edit', carWithOwner.car.id]">{{carWithOwner.car.name}}</a>
+        </h3>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="1" rowspan="1">
+        <h3 mat-line>
+          <a mat-button [routerLink]="['/owner-edit', carWithOwner.owner.id]">{{carWithOwner.owner.dni}}</a>
+        </h3>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="1" rowspan="1">
+        <h3 mat-line>
+          <a mat-button [routerLink]="['/owner-edit', carWithOwner.owner.id]">{{carWithOwner.owner.name}}</a>
+        </h3>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="1" rowspan="1">
+        <h3 mat-line>
+          <a mat-button [routerLink]="['/owner-edit', carWithOwner.owner.id]">{{carWithOwner.owner.profession}}</a>
+        </h3>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </div>
+
 </mat-card>

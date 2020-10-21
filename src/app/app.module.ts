@@ -9,6 +9,7 @@ import { CarListComponent } from './car-list/car-list.component';
 import { OwnerListComponent } from './owner-list/owner-list.component';
 import { OwnerEditComponent } from './owner-edit/owner-edit.component';
 import { DialogLink } from './dialog-link/dialog-link';
+import { CarWithOwnerListComponent } from './car-with-owner-list/car-with-owner-list.component';
 
 import { MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,7 +23,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
-import { CarWithOwnerListComponent } from './car-with-owner-list/car-with-owner-list.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { CarWithOwnerListComponent } from './car-with-owner-list/car-with-owner-
     MatCheckboxModule,
     MatDialogModule,
     MatExpansionModule,
-    MatRadioModule
+    MatRadioModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

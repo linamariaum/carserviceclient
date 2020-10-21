@@ -35,10 +35,26 @@ export class CarEditComponent implements OnInit, OnDestroy {
             this.car.href = car._links.self.href;
             this.giphyService.get(car.name).subscribe(url => car.giphyUrl = url);
           } else {
+            Swal.fire({
+              icon: 'info',
+              title: `Car not found`,
+              text: `Car with id '${id}' not found, returning to list`,
+              showConfirmButton: false,
+              timer: 1800
+            });
             console.log(`Car with id '${id}' not found, returning to list`);
             this.gotoList();
           }
-        });
+        }, error => {
+          Swal.fire({
+            icon: 'info',
+            title: `Car not found`,
+            text: `Car with id '${id}' not found, returning to list`,
+            showConfirmButton: false,
+            timer: 1800
+          });
+          this.gotoList();
+          console.error(error)});
       }
     });
   }
@@ -58,22 +74,39 @@ export class CarEditComponent implements OnInit, OnDestroy {
   }
 
   remove(href) {
-    this.carService.remove(href).subscribe(result => {
-      this.gotoList();
-    }, error => console.error(error));
+    Swal.fire({
+      title: 'Are you sure you want to delete this car?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3f51b5',
+      cancelButtonColor: '#949B9C',
+      confirmButtonText: 'Yes, remove!',
+      cancelButtonText: 'Cancel'
+    }).then(async (result) => {
+      if (result.value) {
+        this.carService.remove(href).subscribe(result => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.gotoList();
+        }, error => console.error(error));
+      }
+    });
   }
 
   linkOwner(car: any) {
     //Link to a OWNER
-    console.log('añadir owner al carro')
     const dialogRef = this.dialog.open(DialogLink, {
-      height: '70%',
+      height: '90%',
       width: '60%',
       data: { content: car, type: 'car', response: null}
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.response) {
-        console.log('eligio persona')
+      if (result) {
+        // Eligio persona
         Swal.fire({
           icon: 'success',
           title: `${result.response.name} owns the ${car.name}`,

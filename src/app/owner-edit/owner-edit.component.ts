@@ -25,7 +25,7 @@ export class OwnerEditComponent implements OnInit, OnDestroy {
               private carService: CarService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
@@ -34,10 +34,26 @@ export class OwnerEditComponent implements OnInit, OnDestroy {
             this.owner = user;
             this.owner.href = user._links.self.href;
           } else {
+            Swal.fire({
+              icon: 'info',
+              title: `Owner not found`,
+              text: `Owner with id '${id}' not found, returning to list`,
+              showConfirmButton: false,
+              timer: 1800
+            });
             console.log(`Owner with id '${id}' not found, returning to list`);
             this.gotoList();
           }
-        });
+        }, error => {
+          Swal.fire({
+            icon: 'info',
+            title: `Owner not found`,
+            text: `Owner with id '${id}' not found, returning to list`,
+            showConfirmButton: false,
+            timer: 1800
+          });
+          this.gotoList();
+          console.error(error)});
       }
     });
   }
@@ -68,10 +84,13 @@ export class OwnerEditComponent implements OnInit, OnDestroy {
     }).then(async (result) => {
       if (result.value) {
         // Desvincular autos si tiene
-        this.carService.getAll().subscribe(data => {
-          const datos = data;
+        this.carService.getCars().subscribe(data => {
+          const response = data;
+          const datos = response._embedded.cars;
           for (const car of datos) {
             if (car.ownerDni === owner.dni) {
+              car.href = car._links.self.href;
+              car.id = car.href.slice(48);
               car.ownerDni = null;
               this.carService.save(car).subscribe(result => {
                 // Actualiza al carro
@@ -95,15 +114,14 @@ export class OwnerEditComponent implements OnInit, OnDestroy {
 
   linkOwner(owner: any){
     //Link to a CAR
-    console.log('añadir carro al owner')
     const dialogRef = this.dialog.open(DialogLink, {
-      height: '70%',
+      height: '90%',
       width: '60%',
       data: { content: owner, type: 'owner', response: null}
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.response) {
-        console.log('eligio carrito')
+      if (result) {
+        // Eligio carrito
         Swal.fire({
           icon: 'success',
           title: `${owner.name} owns the ${result.response.name}`,

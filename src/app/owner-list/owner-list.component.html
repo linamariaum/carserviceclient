@@ -1,10 +1,6 @@
 <mat-card style="margin: 2rem;">
   <mat-card-title>
     <span style="margin: 0 10rem 0 0;">Owner List</span>
-    <button mat-raised-button color="primary" [routerLink]="['/owner-add']">
-      <mat-icon>person_add</mat-icon>
-      Add
-    </button>
   </mat-card-title>
   <mat-card-content>
     <div class="scroll" *ngIf="owners">
@@ -67,6 +63,12 @@
       </table>
       <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
     </div>
-    <button mat-raised-button color="warn" type="button" (click)="deleteSelectedOwners()" [disabled]="selection.selected.length === 0">Delete owners</button>
+    <button mat-raised-button color="primary" [routerLink]="['/owner-add']">
+      <mat-icon>person_add</mat-icon> Add owner
+    </button>
+    <button mat-raised-button color="warn" type="button" (click)="deleteSelectedOwners()"
+      [disabled]="selection.selected.length === 0" style="margin-left: 1rem;">
+        <mat-icon>delete</mat-icon> Delete owners
+    </button>
   </mat-card-content>
 </mat-card>

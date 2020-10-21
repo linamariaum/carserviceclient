@@ -24,23 +24,25 @@ export class DialogLink implements OnInit {
 
   ngOnInit() {
     if (this.data.type === 'owner') {
-      console.log('personita')
       this.identificador = 'ID';
+      let carsAux: Array<any> = []
       // Listar carros
-      this.carService.getAll().subscribe(data => {
-        const cars = data;
+      this.carService.getCars().subscribe(data => {
+        const response = data;
+        const cars = response._embedded.cars;
         for (const car of cars) {
-          if (car.ownerDni) {
-            this.datos.push(car);
+          if (!car.ownerDni) {
+            car.href = car._links.self.href;
+            car.id = car.href.slice(48);
+            carsAux.push(car);
           }
         }
+        this.datos = carsAux
         this.dataSource = new MatTableDataSource<any>(this.datos);
         this.dataSource.paginator = this.paginator;
-        this.dataSource.paginator._intl.itemsPerPageLabel = 'Items for page';
       });
 
     } else if (this.data.type === 'car') {
-      console.log('carrito')
       this.identificador = 'DNI';
       // Listar owners
       this.ownerService.getAll().subscribe(data => {
@@ -51,7 +53,6 @@ export class DialogLink implements OnInit {
         }
         this.dataSource = new MatTableDataSource<any>(this.datos);
         this.dataSource.paginator = this.paginator;
-        this.dataSource.paginator._intl.itemsPerPageLabel = 'Items for page';
       });
     }
 
@@ -61,7 +62,7 @@ export class DialogLink implements OnInit {
     if (this.data.response) {
       if (this.data.type === 'owner') {
         this.data.response.ownerDni = this.data.content.dni;
-        this.ownerService.save(this.data.response).subscribe(result => {
+        this.carService.save(this.data.response).subscribe(result => {
           //Actualizado exitosamente
         }, error => console.error(error));
       }

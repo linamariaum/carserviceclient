@@ -37,7 +37,6 @@
   </div>
 
   <div mat-dialog-actions align="end">
-    {{selected}}
     <button mat-button (click)="onNoClick()" style="background-color: #A8B0B1;" cdkFocusInitial>Cancel</button>
     <button mat-raised-button color="accent" type="submit" [mat-dialog-close]="data" [disabled]="!selected" (click)="link()">Link</button>
   </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class CarService {
@@ -12,6 +13,10 @@ export class CarService {
 
   getAll(): Observable<any> {
     return this.http.get(this.API + '/cool-cars');
+  }
+
+  getCars(): Observable<any> {
+    return this.http.get(this.CAR_API);
   }
 
   get(id: string) {
@@ -31,4 +36,27 @@ export class CarService {
   remove(href: string) {
     return this.http.delete(href);
   }
+
+  async getAllCarsP(): Promise<any> {
+    return await this.http.get<any>(this.CAR_API)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      ).toPromise();
+  }
+
+  // Error handling
+  handleError(error) {
+    let errorMessage;
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      // errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = error;
+    }
+    return throwError(errorMessage);
+  }
+
 }

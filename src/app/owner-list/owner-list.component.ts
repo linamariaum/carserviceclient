@@ -39,9 +39,6 @@ export class OwnerListComponent implements OnInit {
   deleteSelectedOwners() {
     // Owners Selected
     const ownersToDelete = this.getSelectedOwners();
-    console.log("se seleccionó a:")
-    console.log(ownersToDelete)
-
     Swal.fire({
       title: 'Are you sure you want to remove these owners?',
       icon: 'warning',
@@ -53,11 +50,14 @@ export class OwnerListComponent implements OnInit {
     }).then(async (result) => {
       if (result.value) {
         // Desvincular los autos de estos propietarios
-        this.carService.getAll().subscribe(data => {
-          const datos = data;
+        this.carService.getCars().subscribe(data => {
+          const response = data
+          const datos = response._embedded.cars;
           for (const car of datos) {
             for (const ownerDelete of ownersToDelete) {
               if (car.ownerDni === ownerDelete.dni) {
+                car.href = car._links.self.href;
+                car.id = car.href.slice(48);
                 car.ownerDni = null;
                 this.carService.save(car).subscribe(result => {
                   // Actualiza al carro
@@ -73,7 +73,6 @@ export class OwnerListComponent implements OnInit {
           if (index !== -1) {
               this.owners.splice(index, 1);
           }
-          console.log(ownerDelete)
           this.ownerService.remove(ownerDelete.href).subscribe(result => {
             this.init();
           }, error => console.error(error));
@@ -101,7 +100,6 @@ export class OwnerListComponent implements OnInit {
     this.dataSource = new MatTableDataSource<any>(this.owners);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator._intl.itemsPerPageLabel = 'Items for page';
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
